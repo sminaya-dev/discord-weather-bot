@@ -1,0 +1,32 @@
+# Environment variables — never commit these
+.env
+.env.local
+.env.*.local
+
+# Node dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+
+# Optional: npm cache
+.npm
