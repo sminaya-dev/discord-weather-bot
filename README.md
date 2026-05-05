@@ -83,19 +83,19 @@ Slash commands are registered automatically on startup via the `clientReady` eve
 
 **Event-driven architecture**
 
-The bot uses Discord.js's event system rather than polling. Two event handlers are registered on the client — `clientReady` fires once on startup to register slash commands via the REST API, and `interactionCreate` fires on every user interaction to route it to the correct command handler.
+The bot uses Discord.js's event system rather than polling. Two event handlers are registered on the client — `clientReady` fires once on startup to register slash commands via the REST API, and `interactionCreate` fires on every user interaction to route it to the correct command handler. This keeps the bot responsive without any continuous loops or timers.
 
-**Slash command registration**
+**Programmatic slash command registration**
 
-Commands are registered programmatically on startup using Discord's REST API via `Routes.applicationGuildCommands()`. This means adding a new command is as simple as creating a new file in `commands/` and importing it in `index.js` — no manual portal configuration needed.
+Commands are registered on startup using Discord's REST API via `Routes.applicationGuildCommands()`. Adding a new command is as simple as creating a new file in `commands/` and importing it in `index.js` — no manual configuration in the Discord Developer Portal required.
 
 **Deferred replies for async operations**
 
-Both weather commands call `interaction.deferReply()` immediately before the API request. This sends Discord an acknowledgment within the required 3-second window, preventing the "application did not respond" timeout while the API call completes. The actual response is then sent via `interaction.editReply()`.
+Both weather commands call `interaction.deferReply()` immediately before making the API request. This sends Discord an acknowledgment within the required 3-second response window, preventing an "application did not respond" timeout while the external API call completes. The actual response is then sent via `interaction.editReply()` once the data is ready.
 
 **Ephemeral error handling**
 
-The `interactionCreate` handler checks whether an interaction has already been replied to or deferred before sending an error message, and uses `followUp()` or `reply()` accordingly. Errors are sent as ephemeral messages so they're only visible to the user who triggered the command.
+The `interactionCreate` handler checks whether an interaction has already been replied to or deferred before sending an error message, using `followUp()` or `reply()` accordingly. All errors are sent as ephemeral messages, visible only to the user who triggered the command, to avoid cluttering the channel.
 
 ---
 
