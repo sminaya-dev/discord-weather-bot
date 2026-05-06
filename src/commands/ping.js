@@ -6,9 +6,7 @@ const data = new SlashCommandBuilder()
 
 async function execute(interaction) {
   await interaction.reply("Pong!");
-
-  // Run this to test ephemeral error functionality
-  // throw new Error("Made up error");
 }
 
 export { data, execute };
+
